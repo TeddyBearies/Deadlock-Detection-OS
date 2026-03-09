@@ -114,8 +114,10 @@ int main() {
         }
     }
 
+    cout << "\nfinal result:\n";
+
     if (deadlock) {
-        cout << "\ndeadlock found\n";
+        cout << "deadlock found\n";
         cout << "deadlocked processes: ";
 
         for (int i = 0; i < n; i++) {
@@ -126,7 +128,7 @@ int main() {
         cout << endl;
     }
     else {
-        cout << "\nno deadlock found\n";
+        cout << "no deadlock found\n";
     }
 
     return 0;
