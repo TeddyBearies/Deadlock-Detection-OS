@@ -56,5 +56,78 @@ int main() {
         cout << endl;
     }
 
+    vector<int> a(m , 0);
+
+    for (int j = 0; j < m; j++) {
+        int used = 0;
+        for (int i = 0; i < n; i++) {
+            used += c[i][j];
+        }
+        a[j] = e[j] - used;
+    }
+
+    cout << "\navailable resources:\n";
+    for (int i = 0; i < m; i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+
+    vector<int> work = a;
+    vector<bool> finish(n , false);
+
+    bool foundSomething = true;
+
+    while (foundSomething) {
+        foundSomething = false;
+
+        for (int i = 0; i < n; i++) {
+            if (finish[i]) {
+                continue;
+            }
+
+            bool canRun = true;
+
+            for (int j = 0; j < m; j++) {
+                if (r[i][j] > work[j]) {
+                    canRun = false;
+                    break;
+                }
+            }
+
+            if (canRun) {
+                for (int j = 0; j < m; j++) {
+                    work[j] += c[i][j];
+                }
+
+                finish[i] = true;
+                foundSomething = true;
+            }
+        }
+    }
+
+    bool deadlock = false;
+
+    for (int i = 0; i < n; i++) {
+        if (!finish[i]) {
+            deadlock = true;
+            break;
+        }
+    }
+
+    if (deadlock) {
+        cout << "\ndeadlock found\n";
+        cout << "deadlocked processes: ";
+
+        for (int i = 0; i < n; i++) {
+            if (!finish[i]) {
+                cout << "p" << i << " ";
+            }
+        }
+        cout << endl;
+    }
+    else {
+        cout << "\nno deadlock found\n";
+    }
+
     return 0;
 }
